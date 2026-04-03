@@ -1,0 +1,55 @@
+# =========================
+# 🔥 Virtual Environments
+# =========================
+venv/
+env/
+ENV/
+
+# =========================
+# 🐍 Python Cache Files
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# =========================
+# 📓 Jupyter Notebook
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# 📂 Data Files
+# =========================
+# Ignore raw dataset (VERY IMPORTANT)
+data/raw/
+
+# Ignore processed data (optional, but recommended)
+data/processed/
+
+# Keep demo data for hackathon
+!data/demo_patients/
+
+# =========================
+# 🔐 Environment Variables
+# =========================
+.env
+
+# =========================
+# 🖥️ OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# 📝 Logs & Temp Files
+# =========================
+*.log
+*.tmp
+*.bak
+
+# =========================
+# 🧰 IDE / Editor Settings
+# =========================
+.vscode/
+.idea/
