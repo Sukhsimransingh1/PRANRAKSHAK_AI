@@ -1,0 +1,83 @@
+<<<<<<< HEAD
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+=======
+# =========================
+# 🔥 Virtual Environments
+# =========================
+venv/
+env/
+ENV/
+
+# =========================
+# 🐍 Python Cache Files
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# =========================
+# 📓 Jupyter Notebook
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# 📂 Data Files
+# =========================
+
+# Ignore raw and processed data
+data/raw/
+data/processed/
+
+# ✅ Allow demo data
+!data/
+!data/demo_patients/
+!data/demo_patients/*
+
+# =========================
+# 🔐 Environment Variables
+# =========================
+.env
+
+# =========================
+# 🖥️ OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# 📝 Logs & Temp Files
+# =========================
+*.log
+*.tmp
+*.bak
+
+# =========================
+# 🧰 IDE / Editor Settings
+# =========================
+.vscode/
+.idea/
+>>>>>>> e4d708aefb378b913c0fe7ef7c0d30bc29ce2d47
