@@ -21,14 +21,15 @@ __pycache__/
 # =========================
 # 📂 Data Files
 # =========================
-# Ignore raw dataset (VERY IMPORTANT)
-data/raw/
 
-# Ignore processed data (optional, but recommended)
+# Ignore raw and processed data
+data/raw/
 data/processed/
 
-# Keep demo data for hackathon
+# ✅ Allow demo data
+!data/
 !data/demo_patients/
+!data/demo_patients/*
 
 # =========================
 # 🔐 Environment Variables
