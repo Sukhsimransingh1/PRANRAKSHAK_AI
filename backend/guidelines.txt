@@ -1,0 +1,42 @@
+PRANRAKSHAK CLINICAL GUIDELINES — SEPSIS DECISION SUPPORT
+
+SEPSIS-3 DEFINITION (2016 International Consensus):
+- Sepsis: life-threatening organ dysfunction caused by dysregulated host response to infection.
+- Defined as SOFA score increase of 2 or more points + suspected infection.
+- Septic shock: sepsis + vasopressor requirement + lactate > 2 mmol/L despite fluid resuscitation.
+
+QUICK SOFA (qSOFA) — BEDSIDE SCREENING:
+Score 1 point each for:
+- Altered mentation (GCS < 15)
+- Respiratory rate >= 22 breaths/min
+- Systolic blood pressure <= 100 mmHg
+qSOFA >= 2 warrants further assessment for organ dysfunction.
+
+KEY CLINICAL PARAMETERS AND CONCERN THRESHOLDS:
+Heart Rate (HR):        Normal 60-100 bpm.   Concern: > 90 bpm (tachycardia)
+Systolic BP (SBP):      Normal 90-120 mmHg.  Concern: < 90 mmHg (hypotension)
+Mean Arterial Pressure: Normal 70-100 mmHg.  Concern: < 65 mmHg (shock)
+Respiratory Rate:       Normal 12-20/min.    Concern: > 22/min
+Temperature:            Normal 36.5-37.5°C.  Concern: > 38.3°C or < 36°C
+Oxygen Saturation:      Normal > 95%.        Concern: < 94%
+WBC Count:              Normal 4-11 x10^9/L. Concern: > 12 or < 4
+Lactate:                Normal < 2 mmol/L.   Concern: > 2 mmol/L (tissue hypoperfusion)
+Creatinine:             Normal 0.6-1.2 mg/dL.Concern: > 2.0 mg/dL (AKI)
+Glucose:                Normal 70-140 mg/dL. Concern: > 180 mg/dL (stress hyperglycemia)
+
+SURVIVING SEPSIS CAMPAIGN — HOUR-1 BUNDLE:
+1. Measure lactate. Re-measure if initial lactate > 2 mmol/L.
+2. Obtain blood cultures before administering antibiotics.
+3. Administer broad-spectrum antibiotics.
+4. Begin rapid administration of 30 mL/kg crystalloid for hypotension or lactate >= 4 mmol/L.
+5. Apply vasopressors if patient is hypotensive during or after fluid resuscitation to maintain MAP >= 65 mmHg.
+
+RISK LEVEL INTERPRETATION:
+HIGH (probability > 0.75):   Immediate clinical review required. Consider Hour-1 Bundle initiation.
+MEDIUM (0.40–0.75):          Close monitoring. Reassess vitals within 1 hour. Consider blood cultures.
+LOW (< 0.40):                Continue routine monitoring. Reassess if clinical condition changes.
+
+IMPORTANT DISCLAIMER:
+This system provides decision support only.
+All clinical decisions must be made by the treating physician.
+This tool does not replace clinical judgment, examination, or investigation.
