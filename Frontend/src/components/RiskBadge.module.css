@@ -1,0 +1,54 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: .03em;
+  white-space: nowrap;
+}
+
+.sm { font-size: 11px; padding: 3px 8px; }
+.lg { font-size: 14px; padding: 6px 14px; }
+
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.high {
+  background: var(--color-high-bg);
+  color: var(--color-high);
+  border: 1px solid var(--color-high-border);
+}
+.high .dot { background: var(--color-high); animation: pulse 1.5s infinite; }
+
+.medium {
+  background: var(--color-medium-bg);
+  color: var(--color-medium);
+  border: 1px solid var(--color-medium-border);
+}
+.medium .dot { background: var(--color-medium); }
+
+.low {
+  background: var(--color-low-bg);
+  color: var(--color-low);
+  border: 1px solid var(--color-low-border);
+}
+.low .dot { background: var(--color-low); }
+
+.unknown {
+  background: var(--color-surface-3);
+  color: var(--color-text-muted);
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .6; transform: scale(1.3); }
+}

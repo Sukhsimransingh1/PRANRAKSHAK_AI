@@ -1,0 +1,31 @@
+.wrap { width: 100%; }
+
+.toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.toggle {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
+  transition: all .15s;
+}
+
+.toggle:hover { border-color: var(--color-primary); color: var(--color-primary); }
+.toggleActive { background: #fff; font-weight: 600; }
+
+.empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  background: var(--color-surface-3);
+  border-radius: var(--radius-md);
+}

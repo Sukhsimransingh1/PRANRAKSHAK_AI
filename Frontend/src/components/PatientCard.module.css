@@ -1,0 +1,64 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: all .18s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 16px rgba(37,99,235,.12);
+  transform: translateY(-1px);
+}
+
+.cardHigh {
+  border-left: 4px solid var(--color-high);
+}
+
+.rank {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--color-surface-3);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.info { flex: 1; min-width: 0; }
+.name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.meta { font-size: 12px; color: var(--color-text-muted); margin-top: 2px; }
+
+.riskCol { flex-shrink: 0; min-width: 90px; }
+
+.probCol { flex-shrink: 0; min-width: 130px; }
+
+.barWrap { display: flex; align-items: center; gap: 8px; }
+.barTrack {
+  flex: 1;
+  height: 6px;
+  background: var(--color-surface-3);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.barFill { height: 100%; border-radius: 3px; transition: width .3s; }
+.barVal { font-size: 12px; font-weight: 600; color: var(--color-text-secondary); min-width: 32px; }
+.timestamp { font-size: 11px; color: var(--color-text-muted); margin-top: 3px; }
+
+.arrow { color: var(--color-text-muted); flex-shrink: 0; }
