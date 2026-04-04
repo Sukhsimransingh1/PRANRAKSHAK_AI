@@ -62,3 +62,23 @@ venv/
 __pycache__/
 *.pkl
 *.joblib
+# Database — regenerated on startup
+*.db
+*.db-shm
+*.db-wal
+
+# Raw data — too large
+data/raw/
+
+# Environment
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# DO NOT ignore pkl files if they are in backend/
+# saved_model.pkl
+# shap_explainer.pkl
