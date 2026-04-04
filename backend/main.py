@@ -108,3 +108,4 @@ app.include_router(patients.router)
 app.include_router(predictions.router)
 app.include_router(alerts.router)
 app.include_router(copilot.router)
+

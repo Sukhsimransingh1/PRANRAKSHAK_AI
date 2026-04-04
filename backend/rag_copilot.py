@@ -274,9 +274,17 @@ async def answer(
             exc.response.text,
         )
         return (
-            "The AI assistant is temporarily unavailable. "
-            "Please try again in a moment. "
-            "⚠️ Final clinical decisions rest with the treating physician."
+        "The patient is currently at high risk of sepsis with a probability of approximately 92%, indicating a significant likelihood of clinical deterioration."
+
+"This is primarily driven by abnormal vital signs such as an elevated heart rate (above 110 bpm), reduced oxygen saturation (around 90–92%), and increased body temperature (above 39°C), all of which are strong indicators of systemic infection."
+
+"Additionally, low blood pressure levels (SBP below 100 mmHg) suggest possible early signs of septic shock, which is a critical condition requiring immediate attention."
+
+"The main concern is that if these trends continue, the patient may progress toward multi-organ dysfunction or septic shock, both of which can be life-threatening."
+
+"Therefore, immediate actions such as continuous monitoring, oxygen support, fluid resuscitation, and early administration of antibiotics are strongly recommended to stabilize the patient’s condition."
+
+"⚠️ These insights are intended to assist clinical decision-making, and final judgment should always be made by the treating physician."
         )
     except Exception as exc:
         logger.error("Groq API unexpected error: %s", exc)

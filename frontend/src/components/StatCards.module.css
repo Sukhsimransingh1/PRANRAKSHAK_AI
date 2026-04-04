@@ -37,7 +37,7 @@
 .red .value { color: var(--color-high); }
 
 .amber { border-top-color: var(--color-medium); }
-.amber .value { color: var(--color-medium); }
+.amber .value { color: var(--color-medium); } 
 
 .green { border-top-color: var(--color-low); }
 .green .value { color: var(--color-low); }

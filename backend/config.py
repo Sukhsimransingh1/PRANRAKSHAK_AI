@@ -12,7 +12,7 @@ class Settings(BaseSettings):
 
     # Model
     model_path: str = "../model/saved_model.pkl"
-    shap_explainer_path: str = "../model/saved_shap_explainer.pkl"
+    shap_explainer_path: str = "../model/shap_explainer.pkl"
 
     # RAG
     guidelines_path: str = "./guidelines.txt"

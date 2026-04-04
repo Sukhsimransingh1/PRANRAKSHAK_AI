@@ -184,13 +184,6 @@ export default function DashboardPage({ openCopilot }) {
 
         {/* Charts row */}
         <div className={styles.chartsRow}>
-          <div className={styles.chartCard}>
-            <h2 className={styles.cardTitle}>
-              Explainability — SHAP Analysis
-              <span className={styles.cardSubtitle}>Top factors driving this prediction</span>
-            </h2>
-            <ShapChart shapFactors={patient.shap_factors} />
-          </div>
 
           <div className={styles.chartCard}>
             <h2 className={styles.cardTitle}>

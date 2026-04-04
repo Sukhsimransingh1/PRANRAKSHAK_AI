@@ -23,7 +23,9 @@ export default function ShapChart({ shapFactors }) {
       <div className={styles.empty}>
         No SHAP explanation available for this prediction.
       </div>
+      
     )
+    
   }
 
   const data = shapFactors.map(f => ({
