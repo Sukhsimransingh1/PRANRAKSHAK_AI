@@ -220,6 +220,14 @@ export default function DashboardPage({ openCopilot }) {
             </h2>
             <VitalsChart vitals={patient.vitals} />
           </div>
+
+          <div className={styles.chartCard}>
+            <h2 className={styles.cardTitle}>
+              SHAP Explainability
+              <span className={styles.cardSubtitle}>Top factors influencing sepsis risk</span>
+            </h2>
+            <ShapChart shapFactors={patient.shap_factors} />
+          </div>
         </div>
 
         {/* Latest vitals table */}
