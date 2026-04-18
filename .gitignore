@@ -1,26 +1,18 @@
-# =========================
 # 🔥 Virtual Environments
-# =========================
 venv/
 env/
 ENV/
 
-# =========================
 # 🐍 Python Cache Files
-# =========================
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# =========================
 # 📓 Jupyter Notebook
-# =========================
 .ipynb_checkpoints/
 
-# =========================
 # 📂 Data Files
-# =========================
 
 # Ignore raw and processed data
 data/raw/
@@ -31,27 +23,19 @@ data/processed/
 !data/demo_patients/
 !data/demo_patients/*
 
-# =========================
 # 🔐 Environment Variables
-# =========================
 .env
 
-# =========================
 # 🖥️ OS Files
-# =========================
 .DS_Store
 Thumbs.db
 
-# =========================
 # 📝 Logs & Temp Files
-# =========================
 *.log
 *.tmp
 *.bak
 
-# =========================
 # 🧰 IDE / Editor Settings
-# =========================
 .vscode/
 .idea/
 
@@ -60,8 +44,9 @@ frontend/node_modules/
 venv/
 .env
 __pycache__/
-*.pkl
+
 *.joblib
+
 # Database — regenerated on startup
 *.db
 *.db-shm
