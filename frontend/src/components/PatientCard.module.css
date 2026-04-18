@@ -61,4 +61,42 @@
 .barVal { font-size: 12px; font-weight: 600; color: var(--color-text-secondary); min-width: 32px; }
 .timestamp { font-size: 11px; color: var(--color-text-muted); margin-top: 3px; }
 
+.deleteBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.deleteBtn:hover:not(:disabled) {
+  color: var(--color-high);
+  background: var(--color-high-bg);
+  border-color: var(--color-high-border);
+  transform: scale(1.1);
+}
+
+.deleteBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.deleteSpinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-high);
+  border-radius: 50%;
+  animation: deleteSpin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes deleteSpin { to { transform: rotate(360deg); } }
+
 .arrow { color: var(--color-text-muted); flex-shrink: 0; }

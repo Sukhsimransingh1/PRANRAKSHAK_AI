@@ -31,6 +31,8 @@ export const createPatient = (formData) =>
     timeout: 60000,
   })
 
+export const deletePatient = (id) => api.delete(`/patients/${id}`)
+
 export const rerunPrediction = (id, formData) =>
   api.post(`/patients/${id}/predict`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
