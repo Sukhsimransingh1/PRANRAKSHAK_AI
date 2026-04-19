@@ -221,6 +221,34 @@ def get_patient(patient_id: int):
 
 
 # ─────────────────────────────────────────────────────────
+# DELETE PATIENT
+# ─────────────────────────────────────────────────────────
+
+@router.delete("/{patient_id}", status_code=200)
+def delete_patient(patient_id: int):
+    """
+    Delete a patient and all their related data
+    (vitals, predictions, alerts).
+    """
+    logger.info("Deleting patient id=%d", patient_id)
+
+    deleted = database.delete_patient(patient_id)
+
+    if not deleted:
+        raise HTTPException(
+            status_code=404,
+            detail="Patient not found.",
+        )
+
+    logger.info("Patient id=%d deleted successfully", patient_id)
+
+    return {
+        "success": True,
+        "message": f"Patient {patient_id} deleted.",
+    }
+
+
+# ─────────────────────────────────────────────────────────
 # INTERNAL HELPER
 # ─────────────────────────────────────────────────────────
 

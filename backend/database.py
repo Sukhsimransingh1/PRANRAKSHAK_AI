@@ -133,6 +133,26 @@ def get_patient_by_id(patient_id: int) -> Optional[dict]:
     return dict(row) if row else None
 
 
+def delete_patient(patient_id: int) -> bool:
+    """Delete a patient and all related records (vitals, predictions, alerts)."""
+    with get_connection() as conn:
+        # Check if patient exists
+        row = conn.execute(
+            "SELECT id FROM patients WHERE id = ?", (patient_id,)
+        ).fetchone()
+        if not row:
+            return False
+
+        # Cascade delete related records
+        conn.execute("DELETE FROM vitals WHERE patient_id = ?", (patient_id,))
+        conn.execute("DELETE FROM predictions WHERE patient_id = ?", (patient_id,))
+        conn.execute("DELETE FROM alerts WHERE patient_id = ?", (patient_id,))
+        conn.execute("DELETE FROM patients WHERE id = ?", (patient_id,))
+
+    logger.info("Deleted patient id=%d and all related records", patient_id)
+    return True
+
+
 # ─── Prediction helpers ───────────────────────────────────────────────────────
 
 def save_prediction(

@@ -50,6 +50,11 @@ export default function PatientQueuePage({ openCopilot }) {
     fetchAll(true)
   }
 
+  const handlePatientDeleted = (deletedId) => {
+    setPatients(prev => prev.filter(p => p.id !== deletedId))
+    fetchAll(true)
+  }
+
   const handleRefresh = () => {
     setRefreshing(true)
     fetchAll(true)
@@ -139,6 +144,7 @@ export default function PatientQueuePage({ openCopilot }) {
                   key={patient.id}
                   patient={patient}
                   rank={idx + 1}
+                  onDeleted={handlePatientDeleted}
                 />
               ))}
             </div>

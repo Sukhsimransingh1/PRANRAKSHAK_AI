@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar'
 import RiskBadge from '../components/RiskBadge'
 import ShapChart from '../components/ShapChart'
 import VitalsChart from '../components/VitalsChart'
-import { getPatient, rerunPrediction } from '../api'
+import { getPatient, rerunPrediction, deletePatient } from '../api'
 import styles from './DashboardPage.module.css'
 
 function InfoRow({ label, value }) {
@@ -34,6 +34,7 @@ export default function DashboardPage({ openCopilot }) {
   const [error, setError] = useState('')
   const [rerunning, setRerunning] = useState(false)
   const [rerunError, setRerunError] = useState('')
+  const [deleting, setDeleting] = useState(false)
 
   const load = async () => {
     setLoading(true)
@@ -65,6 +66,21 @@ export default function DashboardPage({ openCopilot }) {
     } finally {
       setRerunning(false)
       if (fileRef.current) fileRef.current.value = ''
+    }
+  }
+
+  const handleDelete = async () => {
+    if (!window.confirm(`Delete patient "${patient?.name}"?\nThis will permanently remove all their vitals, predictions, and alerts.`)) {
+      return
+    }
+    setDeleting(true)
+    try {
+      await deletePatient(patientId)
+      navigate('/queue')
+    } catch (err) {
+      alert(`Failed to delete patient: ${err.message}`)
+    } finally {
+      setDeleting(false)
     }
   }
 
@@ -166,6 +182,18 @@ export default function DashboardPage({ openCopilot }) {
               >
                 Ask Copilot
               </button>
+
+              <button
+                className={styles.deleteBtn}
+                onClick={handleDelete}
+                disabled={deleting}
+              >
+                {deleting ? (
+                  <><span className={styles.smallSpinner} /> Deleting...</>
+                ) : (
+                  '🗑 Delete Patient'
+                )}
+              </button>
             </div>
 
             {rerunError && (
@@ -191,6 +219,14 @@ export default function DashboardPage({ openCopilot }) {
               <span className={styles.cardSubtitle}>Click legend items to toggle</span>
             </h2>
             <VitalsChart vitals={patient.vitals} />
+          </div>
+
+          <div className={styles.chartCard}>
+            <h2 className={styles.cardTitle}>
+              SHAP Explainability
+              <span className={styles.cardSubtitle}>Top factors influencing sepsis risk</span>
+            </h2>
+            <ShapChart shapFactors={patient.shap_factors} />
           </div>
         </div>
 
