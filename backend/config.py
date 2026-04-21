@@ -5,7 +5,7 @@ from functools import lru_cache
 class Settings(BaseSettings):
     # Groq
     groq_api_key: str
-    llm_model: str = "llama-3.2-11b-vision-preview"
+    llm_model: str = "llama-3.3-70b-versatile"
 
     # Database
     database_url: str = "./pranrakshak.db"

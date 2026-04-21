@@ -214,6 +214,7 @@ async def answer(
             {
                 "type": "text",
                 "text": (
+                    f"{system_prompt}\n\n"
                     f"PATIENT CONTEXT:\n{patient_context}\n\n"
                     f"The doctor has uploaded a lab report image.\n"
                     f"Please read all visible values from the image, then answer:\n\n"
@@ -227,20 +228,26 @@ async def answer(
                 },
             },
         ]
+        
+        messages = [{"role": "user", "content": user_content}]
     else:
         # Text-only message
         user_content = (
             f"PATIENT CONTEXT:\n{patient_context}\n\n"
             f"DOCTOR'S QUESTION: {question}"
         )
-
-    payload = {
-        "model": settings.llm_model,
-        "messages": [
+        
+        messages = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_content},
-        ],
-        "max_tokens": 512,
+        ]
+
+    model_to_use = "meta-llama/llama-4-scout-17b-16e-instruct" if image_base64 else settings.llm_model
+
+    payload = {
+        "model": model_to_use,
+        "messages": messages,
+        "max_tokens": 1024,
         "temperature": 0.2,
     }
 
@@ -273,19 +280,7 @@ async def answer(
             exc.response.status_code,
             exc.response.text,
         )
-        return (
-        "The patient is currently at high risk of sepsis with a probability of approximately 92%, indicating a significant likelihood of clinical deterioration."
-
-"This is primarily driven by abnormal vital signs such as an elevated heart rate (above 110 bpm), reduced oxygen saturation (around 90–92%), and increased body temperature (above 39°C), all of which are strong indicators of systemic infection."
-
-"Additionally, low blood pressure levels (SBP below 100 mmHg) suggest possible early signs of septic shock, which is a critical condition requiring immediate attention."
-
-"The main concern is that if these trends continue, the patient may progress toward multi-organ dysfunction or septic shock, both of which can be life-threatening."
-
-"Therefore, immediate actions such as continuous monitoring, oxygen support, fluid resuscitation, and early administration of antibiotics are strongly recommended to stabilize the patient’s condition."
-
-"⚠️ These insights are intended to assist clinical decision-making, and final judgment should always be made by the treating physician."
-        )
+        return f"Sorry, there was an issue processing your request: {exc.response.text}"
     except Exception as exc:
         logger.error("Groq API unexpected error: %s", exc)
         return (
