@@ -10,7 +10,7 @@ services:
       - key: GROQ_API_KEY
         sync: false
       - key: LLM_MODEL
-        value: llama-3.2-11b-vision-preview
+        value: llama-3.3-70b-versatile
       - key: ENV
         value: production
       - key: FRONTEND_ORIGIN
