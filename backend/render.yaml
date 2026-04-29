@@ -21,3 +21,5 @@ services:
 
       - key: SHAP_EXPLAINER_PATH
         value: ./shap_explainer.pkl
+      - key: PYTHON-VERSION
+        value: 3.12
