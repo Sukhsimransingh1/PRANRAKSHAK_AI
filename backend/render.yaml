@@ -14,7 +14,7 @@ services:
       - key: ENV
         value: production
       - key: FRONTEND_ORIGIN
-        value: https://your-app.vercel.app
+        value: https://pranrakshak-ai.vercel.app/
         
       - key: MODEL_PATH
         value: ./saved_model.pkl

@@ -51,9 +51,11 @@ def load_model():
 # ----------------------------------------------------------
 
 def _probability_to_risk(probability: float) -> str:
-    if probability >= 0.75:
+    # Optimized for high recall:
+    # Target threshold 0.3841 captures 75% of sepsis cases.
+    if probability >= 0.65:
         return "HIGH"
-    elif probability >= 0.40:
+    elif probability >= 0.35:
         return "MEDIUM"
     return "LOW"
 

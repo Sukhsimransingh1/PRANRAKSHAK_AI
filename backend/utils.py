@@ -1,9 +1,28 @@
 import io
 import pandas as pd
+import shap
 from fastapi import HTTPException
 from logging_config import get_logger
 
 logger = get_logger(__name__)
+
+# We need an object that has a .shap_values() method for the production pipeline
+class ShapExplainerWrapper:
+    def __init__(self, model_predict_func, background):
+        # Use the most generic Explainer
+        self.explainer = shap.Explainer(model_predict_func, background)
+    
+    def shap_values(self, X):
+        # The production pipeline expects a list [class0_values, class1_values]
+        # or a single array for regression/some boosters.
+        # We'll provide a list to match the existing logic's expectation.
+        explanation = self.explainer(X)
+        # explanation.values has shape (N, features, 2) for binary predict_proba
+        if len(explanation.values.shape) == 3: # (N, features, 2)
+            return [explanation.values[:,:,0], explanation.values[:,:,1]]
+        else: # (N, features)
+            # If it's (N, features), it's likely already class 1 impact
+            return [None, explanation.values]
 
 REQUIRED_FEATURES = [
     "Hour", "HR", "O2Sat", "Temp", "SBP",

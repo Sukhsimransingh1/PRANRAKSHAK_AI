@@ -5,7 +5,7 @@ from pathlib import Path
 
 from config import get_settings
 from logging_config import get_logger
-from utils import get_display_name
+from utils import get_display_name, ShapExplainerWrapper
 
 # Import feature engineering from predictor
 from predictor import _engineer_features
