@@ -4,22 +4,28 @@ services:
     env: python
     rootDir: backend
     plan: free
+
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.13
+
       - key: GROQ_API_KEY
         sync: false
+
       - key: LLM_MODEL
         value: llama-3.3-70b-versatile
+
       - key: ENV
         value: production
+
       - key: FRONTEND_ORIGIN
-        value: https://pranrakshak-ai.vercel.app/
-        
+        value: https://pranrakshak-ai.vercel.app
+
       - key: MODEL_PATH
         value: ./saved_model.pkl
 
       - key: SHAP_EXPLAINER_PATH
         value: ./shap_explainer.pkl
-      - key: PYTHON-VERSION
-        value: 3.12
