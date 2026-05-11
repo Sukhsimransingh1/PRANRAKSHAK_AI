@@ -28,13 +28,17 @@ async def lifespan(app: FastAPI):
     """
     logger.info("PranRakshak backend starting up...")
 
-    init_db()
+    try:
+        init_db()
+    except Exception as exc:
+        logger.warning("Database initialization failed: %s", exc)
 
     try:
         predictor.load_model()
-    except FileNotFoundError as exc:
+    except Exception as exc:
         logger.warning(
-            "Model file missing — predictions will fail until model is trained. %s", exc
+            "Model loading failed — predictions will fail until the model is available. %s",
+            exc,
         )
 
     try:
