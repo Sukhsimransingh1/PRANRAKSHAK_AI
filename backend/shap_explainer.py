@@ -1,17 +1,13 @@
-import joblib
 import numpy as np
 import pandas as pd
-from pathlib import Path
-
-from config import get_settings
+import shap
 from logging_config import get_logger
-from utils import get_display_name, ShapExplainerWrapper
+from utils import get_display_name
 
 # Import feature engineering from predictor
 from predictor import _engineer_features
 
 logger = get_logger(__name__)
-settings = get_settings()
 
 _explainer = None
 _pipeline = None
@@ -23,31 +19,46 @@ _pipeline = None
 
 def load_explainer(pipeline) -> None:
     """
-    Load SHAP explainer from disk.
+    Create SHAP explainer on-the-fly from the trained model.
+    
+    Instead of loading from disk (unreliable across versions),
+    we create a fresh TreeExplainer from the pipeline's estimator.
+    This avoids pickle deserialization issues and ensures compatibility.
     """
 
     global _explainer, _pipeline
 
-    path = Path(settings.shap_explainer_path)
-
-    logger.info("Attempting to load SHAP explainer from: %s", path)
-
-    if not path.exists():
-        logger.warning(
-            "SHAP explainer not found at %s — explanations will be skipped.",
-            path,
-        )
+    if pipeline is None:
+        logger.warning("Pipeline is None — cannot create SHAP explainer.")
         return
 
     try:
-        _explainer = joblib.load(path)
         _pipeline = pipeline
-
-        logger.info("SHAP explainer loaded successfully.")
-        logger.info("Explainer type: %s", type(_explainer))
+        
+        # Extract the XGBoost model from the sklearn pipeline
+        # Typical structure: Pipeline -> [preprocessor, xgb_model]
+        # We need the estimator (usually the last step named 'model' or similar)
+        if hasattr(pipeline, 'named_steps'):
+            # It's a sklearn Pipeline
+            estimator = pipeline.named_steps.get('model') or pipeline.steps[-1][1]
+            logger.info("Extracted estimator from pipeline: %s", type(estimator).__name__)
+        else:
+            # It's a standalone model
+            estimator = pipeline
+            logger.info("Using pipeline as estimator: %s", type(estimator).__name__)
+        
+        # Create TreeExplainer for XGBoost model
+        _explainer = shap.TreeExplainer(estimator)
+        
+        logger.info("SHAP TreeExplainer created successfully.")
+        logger.info("Explainer type: %s", type(_explainer).__name__)
 
     except Exception as exc:
-        logger.error("Failed to load SHAP explainer: %s", exc)
+        logger.error(
+            "Failed to create SHAP explainer: %s",
+            exc,
+            exc_info=True
+        )
 
 
 # ----------------------------------------------------------
@@ -113,34 +124,58 @@ def explain(df: pd.DataFrame) -> list[dict]:
             type(shap_values),
         )
 
+        # Handle different SHAP output formats
+        # TreeExplainer for binary XGBoost returns list: [class_0_values, class_1_values]
         if isinstance(shap_values, list):
-
             logger.info(
                 "SHAP returned list with length: %d",
                 len(shap_values),
             )
+            
+            if len(shap_values) >= 2:
+                # Binary classifier: use class 1 (positive/sepsis class)
+                class_1_values = shap_values[1]
+                values = class_1_values[0]  # First (only) sample
+                logger.info(
+                    "Using class-1 SHAP values (sepsis risk)"
+                )
+            else:
+                # Fallback: use first class if only one available
+                values = shap_values[0][0]
+                logger.warning(
+                    "Only one class in SHAP output, using class-0"
+                )
 
-            values = shap_values[1][0]
-
+        elif isinstance(shap_values, np.ndarray):
+            # numpy array output (regression or single output)
             logger.info(
-                "Class-1 SHAP values shape: %s",
-                np.array(values).shape,
+                "SHAP returned numpy array with shape: %s",
+                shap_values.shape,
             )
+            if len(shap_values.shape) == 2:
+                # Shape: (n_samples, n_features)
+                values = shap_values[0]
+            else:
+                # Unexpected shape
+                logger.error(
+                    "Unexpected SHAP array shape: %s",
+                    shap_values.shape,
+                )
+                return []
 
         else:
-
-            values = shap_values[0]
-
-            logger.info(
-                "SHAP values array shape: %s",
-                np.array(values).shape,
+            logger.error(
+                "Unexpected SHAP values type: %s",
+                type(shap_values).__name__,
             )
+            return []
 
         feature_names = list(feature_row.columns)
 
         logger.info(
-            "Number of feature names: %d",
+            "Number of feature names: %d, Number of SHAP values: %d",
             len(feature_names),
+            len(values),
         )
 
         # --------------------------------------------------
@@ -148,23 +183,19 @@ def explain(df: pd.DataFrame) -> list[dict]:
         # --------------------------------------------------
 
         if len(feature_names) != len(values):
-
             logger.error(
                 "Mismatch: feature_names=%d shap_values=%d",
                 len(feature_names),
                 len(values),
             )
-
             return []
 
     except Exception as exc:
-
         logger.error(
             "SHAP explanation failed: %s",
             exc,
             exc_info=True,
         )
-
         return []
 
     # ------------------------------------------------------
