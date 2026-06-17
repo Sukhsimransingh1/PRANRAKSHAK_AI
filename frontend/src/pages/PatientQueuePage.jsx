@@ -5,12 +5,14 @@ import AlertSection from '../components/AlertSection'
 import PatientCard from '../components/PatientCard'
 import AddPatientModal from '../components/AddPatientModal'
 import { getPatients, getAlerts } from '../api'
+import demoPatients from '../data/demoPatients.json'
+import demoAlerts from '../data/demoAlerts.json'
 import styles from './PatientQueuePage.module.css'
 
 export default function PatientQueuePage({ openCopilot }) {
-  const [patients, setPatients] = useState([])
-  const [alerts, setAlerts] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [patients, setPatients] = useState(demoPatients)
+  const [alerts, setAlerts] = useState(demoAlerts)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [modalOpen, setModalOpen] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
@@ -31,7 +33,7 @@ export default function PatientQueuePage({ openCopilot }) {
   }, [])
 
   useEffect(() => {
-    fetchAll()
+    fetchAll(true)
     const interval = setInterval(() => fetchAll(true), 30000)
     return () => clearInterval(interval)
   }, [fetchAll])
@@ -117,7 +119,7 @@ export default function PatientQueuePage({ openCopilot }) {
               <div className={styles.spinner} />
               <span>Loading patients...</span>
             </div>
-          ) : error ? (
+          ) : error && patients.length === 0 ? (
             <div className={styles.error}>
               <strong>Could not load patients.</strong>
               <p>{error}</p>

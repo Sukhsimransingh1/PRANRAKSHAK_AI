@@ -5,6 +5,7 @@ import RiskBadge from '../components/RiskBadge'
 import ShapChart from '../components/ShapChart'
 import VitalsChart from '../components/VitalsChart'
 import { getPatient, rerunPrediction, deletePatient } from '../api'
+import demoPatients from '../data/demoPatients.json'
 import styles from './DashboardPage.module.css'
 
 function InfoRow({ label, value }) {
@@ -29,15 +30,16 @@ export default function DashboardPage({ openCopilot }) {
   const navigate = useNavigate()
   const fileRef = useRef()
 
-  const [patient, setPatient] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const cachedPatient = demoPatients.find(p => p.id === parseInt(patientId))
+  const [patient, setPatient] = useState(cachedPatient || null)
+  const [loading, setLoading] = useState(!cachedPatient)
   const [error, setError] = useState('')
   const [rerunning, setRerunning] = useState(false)
   const [rerunError, setRerunError] = useState('')
   const [deleting, setDeleting] = useState(false)
 
   const load = async () => {
-    setLoading(true)
+    if (!cachedPatient) setLoading(true)
     setError('')
     try {
       const data = await getPatient(patientId)
@@ -103,7 +105,7 @@ export default function DashboardPage({ openCopilot }) {
     </div>
   )
 
-  if (error) return (
+  if (error && !patient) return (
     <div className={styles.page}>
       <Navbar openCopilot={openCopilot} patientId={+patientId} />
       <div className={styles.errorCenter}>
